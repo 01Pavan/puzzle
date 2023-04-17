@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+  body {
+	background-color: lightseagreen;
+	background-size: cover;
+	background-position: center;
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+    
+}
+
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	text-align: center;
+	padding: 50px 0;
+	color: #FFF;
+	text-shadow: 2px 2px 4px #000;
+    border-radius: 5px;
+    margin-left: 20%;
+    margin-top: 15%;
+    
+}
+
+h1 {
+	font-size: 48px;
+	margin-bottom: 30px;
+}
+
+.buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.button {
+	background-color: #FFC107;
+	color: #FFF;
+	border: none;
+	border-radius: 4px;
+	padding: 12px 24px;
+	margin: 10px;
+	font-size: 18px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.admin-link {
+	background-color: #607D8B;
+	
+}
+
+.button:hover {
+	background-color: #FFA000;
+}
+
+.admin-link:hover {
+	background-color: #455A64;
+}
+
+
+</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Puzzle Challenge</h1>
+        {% csrf_token %}
+
+		
+		<div class="buttons">
+			<a href="{% url 'login' %}" class="button">Sign in</a>
+			<a href="{% url 'signup' %}" class="button">Sign up</a>
+		</div>
+		<div >
+			<br>
+			<a href="{% url 'admin:index' %} ">Admin Page</a>
+			</div>
+	</div>
+</body>
+</html>

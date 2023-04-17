@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<style>
+        body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+    margin-left: 30%;
+    margin-top: 15%;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+h2 {
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+label {
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	font-size: 16px;
+}
+
+button[type="submit"] {
+	padding: 10px;
+	background-color: #4CAF50;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+button[type="submit"]:hover {
+	background-color: #3e8e41;
+}
+
+p {
+	margin-top: 20px;
+	text-align: center;
+}
+
+/* a {
+	color: #4CAF50;
+	text-decoration: none;
+} */
+
+/* a:hover {
+	text-decoration: underline;
+} */
+
+    </style>
+</head>
+<body>
+	<div class="container">
+		<h2>Sign in</h2>
+		{% if messages %}
+			{% for message in messages %}
+			 {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+	
+			{% endfor %}
+			{% endif %}
+		<form method="post">
+            {% csrf_token %} 
+			<label for="username">Username:</label>
+			<input type="text" id="username" name="username" required>
+			<label for="password">Password:</label>
+			<input type="password" id="password" name="pass" required>
+			<button type="submit">Submit</button>
+		</form><br>
+		<a href="{% url 'signup' %}" >Create an account</a>
+	</div>
+</body>
+</html>

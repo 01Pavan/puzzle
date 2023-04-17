@@ -1,0 +1,404 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Flip Cards Example</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+	<style>
+
+        .timer {
+  /* Existing styles... */
+  animation: pulse 1s ease-in-out infinite;
+}
+
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.code input {
+  /* Existing styles... */
+  transition: all 0.2s ease-in-out;
+}
+
+.code input:focus {
+  outline: none;
+  border-color: blue;
+  box-shadow: 0px 0px 10px rgba(0, 0, 255, 0.3);
+  transform: scale(1.05);
+}
+body{
+  background-image: url("https://img.freepik.com/free-photo/close-up-puzzle-background_23-2149289204.jpg?w=900&t=st=1681668308~exp=1681668908~hmac=3d855e383477d763dedce3a12770188b795915fd644e716e65d2ee471928c157");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height:100vh;
+}
+
+        header {
+			background-color: #333;
+			color: white;
+			padding: 20px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			background-image: url("{% static 'puzzle.jpg' %}");
+
+		}
+
+		header h1 {
+			margin: 0;
+		}
+
+		header nav ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			display: flex;
+		}
+
+		header nav li {
+			margin-right: 20px;
+		}
+
+		header nav li:last-child {
+			margin-right: 0;
+		}
+
+		header nav a {
+			color: white;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 16px;
+			transition: color 0.3s ease-in-out;
+		}
+
+		header nav a:hover {
+			color: #ccc;
+		}
+		.submit-btn{
+			background-color: #070A52;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			border-radius: 5px;
+		}
+
+		button {
+			padding: 20px 40px;
+			background-color: #2A2F4F;
+			color: #fff;
+			font-size: 24px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease-in-out;
+		}
+
+		button:hover {
+			background-color: #19376D;
+		}
+
+		.but{
+			margin-left: auto;
+			margin: 90px 70px;
+		}
+		.submit-btn:hover {
+			background-color: #;
+		}
+
+		.logout-btn {
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			border-radius: 5px;
+		}
+
+		.logout-btn:hover {
+			background-color: #3e8e41;
+		}
+
+		footer {
+			background-color: #333;
+			color: white;
+			padding: 10px;
+			text-align: center;
+		}
+		.timer {
+			position: fixed;
+			top: 50%;
+			right: 0;
+			transform: translateY(-50%);
+			padding: 20px;
+			background-color: #f1f1f1;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+			z-index: 9999;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+            border-radius: 5px;
+            margin-left: 10%;
+            margin-top: 15%;
+		}
+
+		.timer label {
+			font-size: 20px;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+
+		.timer span {
+			font-size: 30px;
+			font-weight: bold;
+		}
+
+		.code {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-top: 50px;
+		}
+
+		.code input {
+			font-size: 30px;
+			text-align: center;
+			padding: 10px;
+			width: 50px;
+			margin: 0 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+
+		.code input:focus {
+			outline: none;
+			border-color: blue;
+		}
+
+        .modal {
+			display: none;
+			position: fixed;
+			z-index: 9999;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+		.modal-content {
+			background-color: #fff;
+			margin: 10% auto;
+			padding: 20px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			max-width: 600px;
+		}
+		.modal-close {
+			float: right;
+			cursor: pointer;
+		}
+	</style>
+    <header>
+		<div class = "container-fluid">
+	    <!-- Nav Bar -->
+	    <nav class="navbar navbar-expand-lg navbar-dark">
+	    <a class="navbar-brand" href="">Welcome to puzzle application</a>
+	     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav ml-auto">
+	        <li class="nav-item">
+	            <a class="nav-link" href="#">Home</a>
+	        </li>
+	        <li class="nav-item">
+	            <a class="nav-link" href="#">About</a>
+	        </li>
+	        <li class="nav-item">
+	            <a class="nav-link" href="#">Contact</a>
+	        </li>
+	    </ul>
+	 </div>
+	</nav>
+	 </div>
+        <a href="{% url 'logout'%}" class="logout-btn">Logout</a>
+	</header>
+</head>
+<body>
+
+	<div class="timer">
+		<label>Time:</label>
+		<span id="timer">00:00:00</span>
+	</div>
+
+	<div class="code">
+		<input type="text" maxlength="1" />
+		<input type="text" maxlength="1" />
+		<input type="text" maxlength="1" />
+		<input type="text" maxlength="1" />
+		<input type="text" maxlength="1" />
+		<input type="text" maxlength="1" />
+		<button  class="submit-btn" id="myButton" onclick="checkCode()">Unlock</button>
+	</div>
+	<script>
+		let startTime = Date.now();
+		const timer = document.getElementById('timer');
+		const codeInputs = document.querySelectorAll('.code input');
+		const correctCode = '423427';
+		let num=0;
+
+
+
+		let timerInterval = setInterval(() => {
+			const elapsedTime = Date.now() - startTime;
+			const formattedTime = new Date(elapsedTime).toISOString().substr(11, 8);
+			timer.textContent = formattedTime;
+		}, 1000);
+
+		const checkCode = () => {
+			const enteredCode = Array.from(codeInputs).map(input => input.value).join('');
+
+
+			if (enteredCode === correctCode) {
+				clearInterval(timerInterval);
+                window.location.href = "{% url 'success' %}";
+			}
+			else
+			{
+				alert("wrong code try again !! ");
+				num=num+1;
+				if (num===1)
+				{
+					alert("remaining attempts: 1 ");
+				}
+				if (num===2)
+				{
+					alert("you have no choices");
+                    window.location.href = "{% url 'lose' %}";
+
+				}
+			}
+
+		};
+        function handleButtonClick(questionNumber) {
+			var response = "";
+			switch (questionNumber) {
+				case 1:
+					response =
+
+"How many of the following numbers are divisible by 132 -(264, 396, 462, 792, 968, 2178, 5184, 6336)?";
+					break;
+				case 2:
+					response =
+					"What least number must be added to 1056, so that the sum is completely divisible by 23 ?";
+					break;
+				case 3:
+					response =
+					"Find a positive number which when increased by 17 is equal to 60 times the reciprocal of the number.";
+					break;
+				case 4:
+					response =
+
+"The difference between a two-digit number and the number obtained by interchanging the positions of its digits is 36. What is the difference between the two digits of that number?";
+					break;
+				case 5:
+					response =
+
+"If the number 517*324 is completely divisible by 3, then the smallest whole number in the place of * will be?";
+
+					break;
+				case 6:
+					response =
+
+"If the number 481 * 673 is completely divisible by 9, then the smallest whole number in place of * will be:";
+					break;
+				default:
+					response = "Invalid question number";
+					break;
+			}
+			showModal(response); // Display response in a custom modal
+		}
+
+		function showModal(response) {
+			var modal = document.getElementById("modal");
+			var modalContent = document.getElementById("modal-content");
+			var modalClose = document.getElementById("modal-close");
+			var modalText = document.getElementById("modal-text");
+
+			modalText.innerHTML = response;
+			modal.style.display = "block";
+
+			modalClose.onclick = function() {
+				modal.style.display = "none";
+			}
+
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = "none";
+				}
+			}
+		}
+
+		codeInputs.forEach(input => {
+			input.addEventListener('keyup', (event) => {
+				const { value, maxLength } = event.target;
+				if (value.length === maxLength) {
+					const nextInput = input.nextElementSibling;
+					if (nextInput) {
+						nextInput.focus();
+					} else {
+						checkCode();
+					}
+				}
+			});
+		});
+	</script>
+	<main>
+		<!-- Main content goes here -->
+		<div class="container">
+			<div class="row">
+				<br />
+				<button class="but p-col col-lg-2 col-md-6" onclick="handleButtonClick(1)">BOX-1</button>
+				<button class="but p-col col-lg-2 col-md-6" onclick="handleButtonClick(2)">BOX-2</button>
+				<button class="but p-col col-lg-2 col-md-6" onclick="handleButtonClick(3)">BOX-3</button>
+		    <button class="but p-col col-lg-2 col-md-6" onclick="handleButtonClick(4)">BOX-4</button>
+		    <button class="but p-col col-lg-2 col-md-6" onclick="handleButtonClick(5)">BOX-5</button>
+		    <button class="but p-col col-lg-2 col-md-6" onclick="handleButtonClick(6)">BOX-6</button>
+				<br>
+			</div>
+		</div>
+
+
+		<!-- Modal -->
+		<div id="modal" class="modal">
+			<div class="modal-content">
+				<span id="modal-close" class="modal-close">&times;</span>
+				<p id="modal-text"></p>
+			</div>
+		</div>
+	</main>
+    </body>
+    <footer>
+		<p>&copy; 2023 My Website. All Rights Reserved.</p>
+	</footer>
+    </html>
